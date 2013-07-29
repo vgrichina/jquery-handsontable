@@ -69,7 +69,7 @@ describe('NumericEditor', function () {
     expect(this.$container.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('$6,999.99');
     expect(this.$container.find('tbody tr:eq(0) td:eq(1)').html()).toEqual('6.999,99 €');
 
-    selectCell(0,0);
+    selectCell(0, 0);
 
     keyDown('enter');
 
@@ -81,5 +81,32 @@ describe('NumericEditor', function () {
     expect(this.$container.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('$6,999.99');
     expect(this.$container.find('tbody tr:eq(0) td:eq(1)').html()).toEqual('6.999,99 €');
 
+  });
+
+  it('should allow custom validator', function () {
+    handsontable({
+      data: arrayOfObjects(),
+      allowInvalid: false,
+      columns: [
+        {data: 'id', type: 'numeric', validator: function (val, cb) {
+          cb(parseInt(val, 10) > 100);
+        }},
+        {data: 'name'},
+        {data: 'lastName'}
+      ]
+    });
+    selectCell(2, 0);
+
+    keyDown('enter');
+    document.activeElement.value = '99';
+
+    destroyEditor();
+    expect(getDataAtCell(2, 0)).not.toEqual(99); //should be ignored
+
+    keyDown('enter');
+    document.activeElement.value = '999';
+
+    destroyEditor();
+    expect(getDataAtCell(2, 0)).toEqual(999); //should be number type
   });
 });
