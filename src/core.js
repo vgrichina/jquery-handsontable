@@ -1515,7 +1515,7 @@ Handsontable.Core = function (rootElement, userSettings) {
 
         if (cellProperties.dataType === 'number' && typeof changes[i][3] === 'string') {
           if (changes[i][3].length > 0 && /^-?[\d\s]*\.?\d*$/.test(changes[i][3])) {
-            changes[i][3] = numeral().unformat(changes[i][3] || '0'); //numeral cannot unformat empty string
+            changes[i][3] = parseFloat(changes[i][3]);
           }
         }
 

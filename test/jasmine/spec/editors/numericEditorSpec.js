@@ -44,4 +44,42 @@ describe('NumericEditor', function () {
     destroyEditor();
     expect(getDataAtCell(2, 0)).toEqual(999); //should be number type
   });
+
+  it('should display numbers with decimal point correctly', function () {
+    handsontable({
+      data: [
+        {price: 6999.99}
+      ],
+      columns: [
+        {
+          data: 'price',
+          type: 'numeric',
+          format: '$0,0.00',
+          language: 'en'
+        },
+        {
+          data: 'price',
+          type: 'numeric',
+          format: '0,0.00 $',
+          language: 'de-de'
+        }
+      ]
+    });
+
+    expect(this.$container.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('$6,999.99');
+    expect(this.$container.find('tbody tr:eq(0) td:eq(1)').html()).toEqual('6.999,99 €');
+
+    selectCell(0,0);
+
+    keyDown('enter');
+
+    var editor = this.$container.find('.handsontableInput');
+    expect(editor.val()).toEqual('6999.99');
+
+    keyDown('enter');
+
+    expect(this.$container.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('$6,999.99');
+    expect(this.$container.find('tbody tr:eq(0) td:eq(1)').html()).toEqual('6.999,99 €');
+
+  });
 });

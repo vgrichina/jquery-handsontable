@@ -17,7 +17,8 @@ describe('NumericRenderer', function () {
       cells: function () {
         return {
           type: 'numeric',
-          format: '$0,0.00'
+          format: '$0,0.00',
+          language: 'en'
         }
       }
     });
@@ -31,7 +32,8 @@ describe('NumericRenderer', function () {
       cells: function () {
         return {
           type: 'numeric',
-          format: '$0,0.00'
+          format: '$0,0.00',
+          language: 'en'
         }
       }
     });

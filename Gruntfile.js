@@ -219,6 +219,7 @@ module.exports = function (grunt) {
             'lib/jquery.min.js',
             'lib/bootstrap-typeahead.js',
             'lib/numeral.js',
+            'lib/numeral.de-de.js',
             'lib/jQuery-contextMenu/jquery.contextMenu.js'
           ],
           helpers: [
