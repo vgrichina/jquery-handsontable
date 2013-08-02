@@ -74,7 +74,19 @@ describe('NumericEditor', function () {
     keyDown('enter');
 
     var editor = this.$container.find('.handsontableInput');
-    expect(editor.val()).toEqual('6999.99');
+    expect(editor.val()).toEqual('$6,999.99');
+
+    keyDown('enter');
+
+    expect(this.$container.find('tbody tr:eq(0) td:eq(0)').text()).toEqual('$6,999.99');
+    expect(this.$container.find('tbody tr:eq(0) td:eq(1)').html()).toEqual('6.999,99 €');
+
+    selectCell(0, 1);
+
+    keyDown('enter');
+
+    var editor = this.$container.find('.handsontableInput');
+    expect(editor.val()).toEqual('6.999,99 €');
 
     keyDown('enter');
 

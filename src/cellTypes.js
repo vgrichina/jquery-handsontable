@@ -19,7 +19,7 @@ Handsontable.TextCell = {
 };
 
 Handsontable.NumericCell = {
-  editor: Handsontable.TextEditor,
+  editor: Handsontable.NumericEditor,
   renderer: Handsontable.NumericRenderer,
   validator: Handsontable.NumericValidator,
   dataType: 'number'
