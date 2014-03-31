@@ -6,7 +6,7 @@
  * Licensed under the MIT license.
  * http://handsontable.com/
  *
- * Date: Mon Mar 31 2014 14:19:47 GMT+0200 (CEST)
+ * Date: Mon Mar 31 2014 21:56:27 GMT+0300 (EEST)
  */
 /*jslint white: true, browser: true, plusplus: true, indent: 4, maxerr: 50 */
 
@@ -2647,6 +2647,11 @@ Handsontable.TableView = function (instance) {
       return that.settings.fragmentSelection;
     },
     onCellMouseDown: function (event, coords, TD) {
+      instance.PluginHooks.run('beforeOnCellMouseDown', event, coords, TD);
+      if (event.isImmediatePropagationStopped()) {
+          return;
+      }
+
       instance.listen();
 
       isMouseDown = true;
@@ -2669,6 +2674,11 @@ Handsontable.TableView = function (instance) {
      }
      },*/
     onCellMouseOver: function (event, coords, TD) {
+      instance.PluginHooks.run('beforeOnCellMouseOver', event, coords, TD);
+      if (event.isImmediatePropagationStopped()) {
+          return;
+      }
+
       var coordsObj = {row: coords[0], col: coords[1]};
       if (isMouseDown) {
         /*if (that.settings.fragmentSelection === 'single') {
@@ -2680,6 +2690,7 @@ Handsontable.TableView = function (instance) {
         instance.autofill.handle.isDragged++;
         instance.autofill.showBorder(coords);
       }
+
       instance.PluginHooks.run('afterOnCellMouseOver', event, coords, TD);
     },
     onCellCornerMouseDown: function (event) {
@@ -6975,6 +6986,8 @@ Handsontable.PluginHookClass = (function () {
       beforeAutofill: [],
       beforeKeyDown: [],
       beforeColumnSort: [],
+      beforeOnCellMouseDown: [],
+      beforeOnCellMouseOver: [],
 
       afterInit : [],
       afterLoadData : [],
